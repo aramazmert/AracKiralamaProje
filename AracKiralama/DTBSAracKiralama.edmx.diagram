@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2d10b2b1ee6046cb903dccb8e4be3beb" Name="Diagram1">
+        <EntityTypeShape EntityType="AracKiralamaModel.Araclar" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="AracKiralamaModel.Marka" Width="1.5" PointX="0.75" PointY="1.75" />
+        <EntityTypeShape EntityType="AracKiralamaModel.Musteriler" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="AracKiralamaModel.SanzimanTuru" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="AracKiralamaModel.Satis" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="AracKiralamaModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AracKiralamaModel.YakitTuru" Width="1.5" PointX="0.75" PointY="7.375" />
+        <AssociationConnector Association="AracKiralamaModel.FK_Araclar_AracMarkaNo" />
+        <AssociationConnector Association="AracKiralamaModel.FK_Araclar_SanzimanTuruId" />
+        <AssociationConnector Association="AracKiralamaModel.FK_Araclar_YakitTuruId" />
+        <AssociationConnector Association="AracKiralamaModel.FK_Satis_AracId" />
+        <AssociationConnector Association="AracKiralamaModel.FK_Satis_MusteriId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

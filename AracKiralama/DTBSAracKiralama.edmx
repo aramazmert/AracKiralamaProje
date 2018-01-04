@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AracKiralamaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Araclar">
+          <Key>
+            <PropertyRef Name="AracId" />
+          </Key>
+          <Property Name="AracId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MarkaNo" Type="int" Nullable="false" />
+          <Property Name="Model" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModelYili" Type="int" Nullable="false" />
+          <Property Name="YakitTuruId" Type="int" Nullable="false" />
+          <Property Name="SanzimanTuruId" Type="int" Nullable="false" />
+          <Property Name="GunlukFiyat" Type="money" Nullable="false" />
+          <Property Name="KiradaMi" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Marka">
+          <Key>
+            <PropertyRef Name="MarkaNo" />
+          </Key>
+          <Property Name="MarkaNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AracMarka" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Aciklama" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="MusteriId" />
+          </Key>
+          <Property Name="MusteriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusteriAd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriSoyad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MusteriTelefon" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MusteriAdres" Type="varchar" MaxLength="100" />
+          <Property Name="MusteriTC" Type="varchar" MaxLength="11" />
+          <Property Name="MusteriDogumTarihi" Type="date" Nullable="false" />
+          <Property Name="EhliyetTarihi" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SanzimanTuru">
+          <Key>
+            <PropertyRef Name="SanzimanTuruId" />
+          </Key>
+          <Property Name="SanzimanTuruId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SanzimanAdi" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Satis">
+          <Key>
+            <PropertyRef Name="FaturaId" />
+          </Key>
+          <Property Name="FaturaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MusteriId" Type="int" Nullable="false" />
+          <Property Name="AracId" Type="int" Nullable="false" />
+          <Property Name="AlisTarihi" Type="date" Nullable="false" />
+          <Property Name="TeslimTarihi" Type="date" Nullable="false" />
+          <Property Name="KiralikGunTutari" Type="money" Nullable="false" />
+          <Property Name="ToplamTutar" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="YakitTuru">
+          <Key>
+            <PropertyRef Name="YakitTuruId" />
+          </Key>
+          <Property Name="YakitTuruId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YakitAdi" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Araclar_AracMarkaNo">
+          <End Role="Marka" Type="Self.Marka" Multiplicity="1" />
+          <End Role="Araclar" Type="Self.Araclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaNo" />
+            </Principal>
+            <Dependent Role="Araclar">
+              <PropertyRef Name="MarkaNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Araclar_SanzimanTuruId">
+          <End Role="SanzimanTuru" Type="Self.SanzimanTuru" Multiplicity="1" />
+          <End Role="Araclar" Type="Self.Araclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanzimanTuru">
+              <PropertyRef Name="SanzimanTuruId" />
+            </Principal>
+            <Dependent Role="Araclar">
+              <PropertyRef Name="SanzimanTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Araclar_YakitTuruId">
+          <End Role="YakitTuru" Type="Self.YakitTuru" Multiplicity="1" />
+          <End Role="Araclar" Type="Self.Araclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YakitTuru">
+              <PropertyRef Name="YakitTuruId" />
+            </Principal>
+            <Dependent Role="Araclar">
+              <PropertyRef Name="YakitTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satis_AracId">
+          <End Role="Araclar" Type="Self.Araclar" Multiplicity="1" />
+          <End Role="Satis" Type="Self.Satis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Araclar">
+              <PropertyRef Name="AracId" />
+            </Principal>
+            <Dependent Role="Satis">
+              <PropertyRef Name="AracId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satis_MusteriId">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="1" />
+          <End Role="Satis" Type="Self.Satis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriId" />
+            </Principal>
+            <Dependent Role="Satis">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AracKiralamaModelStoreContainer">
+          <EntitySet Name="Araclar" EntityType="Self.Araclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marka" EntityType="Self.Marka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musteriler" EntityType="Self.Musteriler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SanzimanTuru" EntityType="Self.SanzimanTuru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Satis" EntityType="Self.Satis" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YakitTuru" EntityType="Self.YakitTuru" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Araclar_AracMarkaNo" Association="Self.FK_Araclar_AracMarkaNo">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Araclar" EntitySet="Araclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Araclar_SanzimanTuruId" Association="Self.FK_Araclar_SanzimanTuruId">
+            <End Role="SanzimanTuru" EntitySet="SanzimanTuru" />
+            <End Role="Araclar" EntitySet="Araclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Araclar_YakitTuruId" Association="Self.FK_Araclar_YakitTuruId">
+            <End Role="YakitTuru" EntitySet="YakitTuru" />
+            <End Role="Araclar" EntitySet="Araclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satis_AracId" Association="Self.FK_Satis_AracId">
+            <End Role="Araclar" EntitySet="Araclar" />
+            <End Role="Satis" EntitySet="Satis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satis_MusteriId" Association="Self.FK_Satis_MusteriId">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Satis" EntitySet="Satis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AracKiralamaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ProjectDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Araclar" EntityType="AracKiralamaModel.Araclar" />
+          <EntitySet Name="Marka" EntityType="AracKiralamaModel.Marka" />
+          <EntitySet Name="Musteriler" EntityType="AracKiralamaModel.Musteriler" />
+          <EntitySet Name="SanzimanTuru" EntityType="AracKiralamaModel.SanzimanTuru" />
+          <EntitySet Name="Satis" EntityType="AracKiralamaModel.Satis" />
+          <EntitySet Name="sysdiagrams" EntityType="AracKiralamaModel.sysdiagrams" />
+          <EntitySet Name="YakitTuru" EntityType="AracKiralamaModel.YakitTuru" />
+          <AssociationSet Name="FK_Araclar_AracMarkaNo" Association="AracKiralamaModel.FK_Araclar_AracMarkaNo">
+            <End Role="Marka" EntitySet="Marka" />
+            <End Role="Araclar" EntitySet="Araclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Araclar_SanzimanTuruId" Association="AracKiralamaModel.FK_Araclar_SanzimanTuruId">
+            <End Role="SanzimanTuru" EntitySet="SanzimanTuru" />
+            <End Role="Araclar" EntitySet="Araclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Araclar_YakitTuruId" Association="AracKiralamaModel.FK_Araclar_YakitTuruId">
+            <End Role="YakitTuru" EntitySet="YakitTuru" />
+            <End Role="Araclar" EntitySet="Araclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satis_AracId" Association="AracKiralamaModel.FK_Satis_AracId">
+            <End Role="Araclar" EntitySet="Araclar" />
+            <End Role="Satis" EntitySet="Satis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Satis_MusteriId" Association="AracKiralamaModel.FK_Satis_MusteriId">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Satis" EntitySet="Satis" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Araclar">
+          <Key>
+            <PropertyRef Name="AracId" />
+          </Key>
+          <Property Name="AracId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarkaNo" Type="Int32" Nullable="false" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModelYili" Type="Int32" Nullable="false" />
+          <Property Name="YakitTuruId" Type="Int32" Nullable="false" />
+          <Property Name="SanzimanTuruId" Type="Int32" Nullable="false" />
+          <Property Name="GunlukFiyat" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="KiradaMi" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Marka" Relationship="AracKiralamaModel.FK_Araclar_AracMarkaNo" FromRole="Araclar" ToRole="Marka" />
+          <NavigationProperty Name="SanzimanTuru" Relationship="AracKiralamaModel.FK_Araclar_SanzimanTuruId" FromRole="Araclar" ToRole="SanzimanTuru" />
+          <NavigationProperty Name="YakitTuru" Relationship="AracKiralamaModel.FK_Araclar_YakitTuruId" FromRole="Araclar" ToRole="YakitTuru" />
+          <NavigationProperty Name="Satis" Relationship="AracKiralamaModel.FK_Satis_AracId" FromRole="Araclar" ToRole="Satis" />
+        </EntityType>
+        <EntityType Name="Marka">
+          <Key>
+            <PropertyRef Name="MarkaNo" />
+          </Key>
+          <Property Name="MarkaNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AracMarka" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Aciklama" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Araclar" Relationship="AracKiralamaModel.FK_Araclar_AracMarkaNo" FromRole="Marka" ToRole="Araclar" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="MusteriId" />
+          </Key>
+          <Property Name="MusteriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusteriAd" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MusteriSoyad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MusteriTelefon" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MusteriAdres" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MusteriTC" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="MusteriDogumTarihi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EhliyetTarihi" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Satis" Relationship="AracKiralamaModel.FK_Satis_MusteriId" FromRole="Musteriler" ToRole="Satis" />
+        </EntityType>
+        <EntityType Name="SanzimanTuru">
+          <Key>
+            <PropertyRef Name="SanzimanTuruId" />
+          </Key>
+          <Property Name="SanzimanTuruId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SanzimanAdi" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Araclar" Relationship="AracKiralamaModel.FK_Araclar_SanzimanTuruId" FromRole="SanzimanTuru" ToRole="Araclar" />
+        </EntityType>
+        <EntityType Name="Satis">
+          <Key>
+            <PropertyRef Name="FaturaId" />
+          </Key>
+          <Property Name="FaturaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MusteriId" Type="Int32" Nullable="false" />
+          <Property Name="AracId" Type="Int32" Nullable="false" />
+          <Property Name="AlisTarihi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TeslimTarihi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="KiralikGunTutari" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ToplamTutar" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Araclar" Relationship="AracKiralamaModel.FK_Satis_AracId" FromRole="Satis" ToRole="Araclar" />
+          <NavigationProperty Name="Musteriler" Relationship="AracKiralamaModel.FK_Satis_MusteriId" FromRole="Satis" ToRole="Musteriler" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="YakitTuru">
+          <Key>
+            <PropertyRef Name="YakitTuruId" />
+          </Key>
+          <Property Name="YakitTuruId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YakitAdi" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Araclar" Relationship="AracKiralamaModel.FK_Araclar_YakitTuruId" FromRole="YakitTuru" ToRole="Araclar" />
+        </EntityType>
+        <Association Name="FK_Araclar_AracMarkaNo">
+          <End Type="AracKiralamaModel.Marka" Role="Marka" Multiplicity="1" />
+          <End Type="AracKiralamaModel.Araclar" Role="Araclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marka">
+              <PropertyRef Name="MarkaNo" />
+            </Principal>
+            <Dependent Role="Araclar">
+              <PropertyRef Name="MarkaNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Araclar_SanzimanTuruId">
+          <End Type="AracKiralamaModel.SanzimanTuru" Role="SanzimanTuru" Multiplicity="1" />
+          <End Type="AracKiralamaModel.Araclar" Role="Araclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SanzimanTuru">
+              <PropertyRef Name="SanzimanTuruId" />
+            </Principal>
+            <Dependent Role="Araclar">
+              <PropertyRef Name="SanzimanTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Araclar_YakitTuruId">
+          <End Type="AracKiralamaModel.YakitTuru" Role="YakitTuru" Multiplicity="1" />
+          <End Type="AracKiralamaModel.Araclar" Role="Araclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YakitTuru">
+              <PropertyRef Name="YakitTuruId" />
+            </Principal>
+            <Dependent Role="Araclar">
+              <PropertyRef Name="YakitTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satis_AracId">
+          <End Type="AracKiralamaModel.Araclar" Role="Araclar" Multiplicity="1" />
+          <End Type="AracKiralamaModel.Satis" Role="Satis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Araclar">
+              <PropertyRef Name="AracId" />
+            </Principal>
+            <Dependent Role="Satis">
+              <PropertyRef Name="AracId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Satis_MusteriId">
+          <End Type="AracKiralamaModel.Musteriler" Role="Musteriler" Multiplicity="1" />
+          <End Type="AracKiralamaModel.Satis" Role="Satis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="MusteriId" />
+            </Principal>
+            <Dependent Role="Satis">
+              <PropertyRef Name="MusteriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AracKiralamaModelStoreContainer" CdmEntityContainer="ProjectDB">
+          <EntitySetMapping Name="Araclar">
+            <EntityTypeMapping TypeName="AracKiralamaModel.Araclar">
+              <MappingFragment StoreEntitySet="Araclar">
+                <ScalarProperty Name="KiradaMi" ColumnName="KiradaMi" />
+                <ScalarProperty Name="GunlukFiyat" ColumnName="GunlukFiyat" />
+                <ScalarProperty Name="SanzimanTuruId" ColumnName="SanzimanTuruId" />
+                <ScalarProperty Name="YakitTuruId" ColumnName="YakitTuruId" />
+                <ScalarProperty Name="ModelYili" ColumnName="ModelYili" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="MarkaNo" ColumnName="MarkaNo" />
+                <ScalarProperty Name="AracId" ColumnName="AracId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marka">
+            <EntityTypeMapping TypeName="AracKiralamaModel.Marka">
+              <MappingFragment StoreEntitySet="Marka">
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="AracMarka" ColumnName="AracMarka" />
+                <ScalarProperty Name="MarkaNo" ColumnName="MarkaNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musteriler">
+            <EntityTypeMapping TypeName="AracKiralamaModel.Musteriler">
+              <MappingFragment StoreEntitySet="Musteriler">
+                <ScalarProperty Name="EhliyetTarihi" ColumnName="EhliyetTarihi" />
+                <ScalarProperty Name="MusteriDogumTarihi" ColumnName="MusteriDogumTarihi" />
+                <ScalarProperty Name="MusteriTC" ColumnName="MusteriTC" />
+                <ScalarProperty Name="MusteriAdres" ColumnName="MusteriAdres" />
+                <ScalarProperty Name="MusteriTelefon" ColumnName="MusteriTelefon" />
+                <ScalarProperty Name="MusteriSoyad" ColumnName="MusteriSoyad" />
+                <ScalarProperty Name="MusteriAd" ColumnName="MusteriAd" />
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SanzimanTuru">
+            <EntityTypeMapping TypeName="AracKiralamaModel.SanzimanTuru">
+              <MappingFragment StoreEntitySet="SanzimanTuru">
+                <ScalarProperty Name="SanzimanAdi" ColumnName="SanzimanAdi" />
+                <ScalarProperty Name="SanzimanTuruId" ColumnName="SanzimanTuruId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Satis">
+            <EntityTypeMapping TypeName="AracKiralamaModel.Satis">
+              <MappingFragment StoreEntitySet="Satis">
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="KiralikGunTutari" ColumnName="KiralikGunTutari" />
+                <ScalarProperty Name="TeslimTarihi" ColumnName="TeslimTarihi" />
+                <ScalarProperty Name="AlisTarihi" ColumnName="AlisTarihi" />
+                <ScalarProperty Name="AracId" ColumnName="AracId" />
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+                <ScalarProperty Name="FaturaId" ColumnName="FaturaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AracKiralamaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YakitTuru">
+            <EntityTypeMapping TypeName="AracKiralamaModel.YakitTuru">
+              <MappingFragment StoreEntitySet="YakitTuru">
+                <ScalarProperty Name="YakitAdi" ColumnName="YakitAdi" />
+                <ScalarProperty Name="YakitTuruId" ColumnName="YakitTuruId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
